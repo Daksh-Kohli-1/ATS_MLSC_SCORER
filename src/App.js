@@ -41,7 +41,7 @@ const LoginPage = ({ onLogin }) => {
     <div className="page-container">
       <div className="header">
         <div className="logo">
-          <img src='/mlsc.png' height={50} alt="logo" />
+          <img src='/mlsc.png' height={150} alt="logo" />
         </div>
       </div>
       

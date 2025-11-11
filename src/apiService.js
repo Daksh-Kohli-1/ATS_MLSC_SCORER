@@ -1,6 +1,6 @@
 // src/apiService.js
-const API_BASE_URL = 'http://localhost:8000';
-
+const API_BASE_URL = process.env.REACT_APP_API_ROUTE || 'http://localhost:8000';
+const API_KEY = process.env.REACT_APP_API_KEY
 class APIService {
   // Register participant
   async register(name, email, mobile) {
@@ -9,6 +9,7 @@ class APIService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-API-Key':API_KEY,
         },
         body: JSON.stringify({ name, email, mobile }),
       });
@@ -36,6 +37,9 @@ class APIService {
       const response = await fetch(`${API_BASE_URL}/api/submit`, {
         method: 'POST',
         body: formData,
+        headers: {
+          'X-API-Key':API_KEY,
+        },
       });
 
       if (!response.ok) {
@@ -53,7 +57,11 @@ class APIService {
   // Get participant scores
   async getParticipantScores(participantId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/participant/${participantId}/scores`);
+      const response = await fetch(`${API_BASE_URL}/api/participant/${participantId}/scores`,{
+        headers: {
+          'X-API-Key':API_KEY,
+        },
+      });
 
       if (!response.ok) {
         const error = await response.json();
@@ -70,7 +78,11 @@ class APIService {
   // Get upload count
   async getUploadCount(participantId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/participant/${participantId}/upload-count`);
+      const response = await fetch(`${API_BASE_URL}/api/participant/${participantId}/upload-count`,{
+        headers: {
+          'X-API-Key': API_KEY,
+        },
+      });
 
       if (!response.ok) {
         const error = await response.json();
@@ -87,7 +99,11 @@ class APIService {
   // Get leaderboard
   async getLeaderboard() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/leaderboard`);
+      const response = await fetch(`${API_BASE_URL}/api/leaderboard`,{
+        headers: {
+          'X-API-Key': API_KEY,
+        },
+      });
 
       if (!response.ok) {
         const error = await response.json();
@@ -104,7 +120,11 @@ class APIService {
   // Get competition stats
   async getStats() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/stats`);
+      const response = await fetch(`${API_BASE_URL}/api/stats`,{
+        headers: {
+          'X-API-Key': API_KEY,
+        },
+      });
 
       if (!response.ok) {
         const error = await response.json();
@@ -121,7 +141,11 @@ class APIService {
   // Health check
   async healthCheck() {
     try {
-      const response = await fetch(`${API_BASE_URL}/`);
+      const response = await fetch(`${API_BASE_URL}/`,{
+        headers: {
+          'X-API-Key': API_KEY,
+        },
+      });
       return await response.json();
     } catch (error) {
       console.error('Health check error:', error);
